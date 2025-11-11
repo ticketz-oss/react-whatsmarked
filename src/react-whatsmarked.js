@@ -28,13 +28,13 @@ import { marked } from "marked";
 import "./react-whatsmarked.css";
 
 function escapeHTML(html) {
-    return html.replace(/[&<>"']/g, (char) => ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;'
-    }[char]));
+  return html.replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[char]));
 }
 
 class CustomRenderer extends marked.Renderer {
@@ -64,7 +64,7 @@ class CustomRenderer extends marked.Renderer {
   codespan(input) {
     return `<code>${escapeHTML(input.text)}</code>`;
   }
-  
+
   unsupported(input) {
     console.debug(input);
     return input.raw.replace("\n", "<br>");
@@ -84,15 +84,15 @@ class CustomRenderer extends marked.Renderer {
     }
     return raw.replace("\n", "<br>");
   }
-  
+
   html({ text }) {
     return escapeHTML(text);
   }
-  
+
   space(input) {
     return input.raw.replace("\n\n", "").replaceAll("\n", "<br>");
   }
-  
+
 }
 
 // use ⣿ for gray text
@@ -116,6 +116,36 @@ const gray = {
   },
 };
 
+// mention syntax: @[base64-encoded-json]
+const mention = {
+  name: 'mention',
+  level: 'inline',
+  start(src) { return src.indexOf('@[eyJ'); },
+  tokenizer(src) {
+    if (!window.mentionRenderer) {
+      return;
+    }
+    const rule = /^@\[(.*?)\]/;
+    const match = rule.exec(src);
+    if (match) {
+      try {
+        const jsonStr = atob(match[1]);
+        const payload = JSON.parse(jsonStr);
+        return {
+          type: 'mention',
+          raw: match[0],
+          payload,
+        };
+      } catch (e) {
+        return;
+      }
+    }
+  },
+  renderer(token) {
+    return window.mentionRenderer(token.payload);
+  },
+};
+
 const renderer = new CustomRenderer();
 
 marked.setOptions({
@@ -127,7 +157,7 @@ marked.setOptions({
   smartypants: false,
 });
 
-marked.use({ extensions: [gray] });
+marked.use({ extensions: [gray, mention] });
 
 const WhatsMarked = ({ children, oneline, className }) => {
   if (!children) return null;

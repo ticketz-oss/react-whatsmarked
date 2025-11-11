@@ -125,7 +125,7 @@ const mention = {
     if (!window.mentionRenderer) {
       return;
     }
-    const rule = /^@\[(.*?)\]/;
+    const rule = /^@\[(eyJ.*?)\]/;
     const match = rule.exec(src);
     if (match) {
       try {
@@ -137,7 +137,7 @@ const mention = {
           payload,
         };
       } catch (e) {
-        return;
+        // no op
       }
     }
   },

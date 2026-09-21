@@ -5,14 +5,17 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'lib'),
     filename: 'react-whatsmarked.js',
-    library: 'ReactWhatsmarked',
-    libraryTarget: 'umd',
-    globalObject: 'this'
+    library: {
+      name: 'ReactWhatsmarked',
+      type: 'umd',
+      export: 'default',
+    },
+    globalObject: 'this',
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',

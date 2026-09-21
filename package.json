@@ -1,8 +1,7 @@
 {
   "name": "react-whatsmarked",
-  "version": "0.0.1-alwaysdev",
+  "version": "0.9.22",
   "main": "lib/react-whatsmarked.js",
-  "module": "src/react-whatsmarked.js",
   "types": "src/react-whatsmarked.d.ts",
   "scripts": {
     "build": "webpack && copyfiles -u 1 src/*.css lib",

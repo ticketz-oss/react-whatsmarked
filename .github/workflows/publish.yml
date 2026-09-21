@@ -31,6 +31,12 @@ jobs:
           VERSION=${GITHUB_REF#refs/tags/}
           npm version $VERSION --no-git-tag-version
 
+      - name: Debug OIDC
+        run: |
+          echo "Repository: ${{ github.repository }}"
+          echo "Workflow: ${{ github.workflow }}"
+          echo "Workflow ref: ${{ github.workflow_ref }}"
+
       - name: Publish to npm
         run: npm publish --provenance --access public
 

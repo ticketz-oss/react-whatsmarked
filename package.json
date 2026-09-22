@@ -1,6 +1,6 @@
 {
   "name": "react-whatsmarked",
-  "version": "0.9.22",
+  "version": "0.9.24",
   "main": "lib/react-whatsmarked.js",
   "types": "lib/react-whatsmarked.d.ts",
   "scripts": {

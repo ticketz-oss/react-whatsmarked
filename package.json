@@ -2,9 +2,9 @@
   "name": "react-whatsmarked",
   "version": "0.9.22",
   "main": "lib/react-whatsmarked.js",
-  "types": "src/react-whatsmarked.d.ts",
+  "types": "lib/react-whatsmarked.d.ts",
   "scripts": {
-    "build": "webpack && copyfiles -u 1 src/*.css lib",
+    "build": "webpack && copyfiles -u 1 src/*.css src/*.d.ts lib",
     "prepare": "npm run build",
     "prepublishOnly": "npm run build"
   },
